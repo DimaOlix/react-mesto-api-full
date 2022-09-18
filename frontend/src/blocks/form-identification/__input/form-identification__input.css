@@ -1,0 +1,21 @@
+.form-identification__input {
+  width: 100%;
+  max-width: 358px;
+  height: 27px;
+  margin-bottom: 30px;
+  border: 0;
+  background-color: black;
+  color: #fff;
+  border-bottom: 2px solid #CCCCCC;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.form-identification__input::-webkit-input-placeholder {
+  color: #fff;
+}
+
+.form-identification__input::-moz-placeholder {
+  color: #fff;
+ }

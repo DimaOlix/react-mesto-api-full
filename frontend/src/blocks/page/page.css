@@ -1,0 +1,22 @@
+.page {
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: #000;
+  color: #fff;
+  font-family: 'Inter', 'Arial', 'Helvetica', 'sans-serif';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media all and (max-width: 950px) {
+  .page {
+    padding: 0 27px;
+  }
+}
+
+@media all and (max-width: 580px) {
+  .page {
+    padding: 0;
+  }
+}
+

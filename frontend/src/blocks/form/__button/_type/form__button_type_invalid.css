@@ -1,0 +1,11 @@
+.form__button_type_invalid {
+  color: rgba(0, 0, 0, .2);
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 2px;
+  cursor: default;
+}
+
+.form__button:hover {
+  opacity: 1;
+}

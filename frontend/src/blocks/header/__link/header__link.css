@@ -1,0 +1,18 @@
+.header__link {
+  align-self: center;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.22;
+  justify-self: right;
+  cursor: pointer;
+}
+
+@media all and (max-width: 580px) {
+  .header__link {
+    font-size: 15px;
+    line-height: 1.2;  
+    grid-row: 1 / span 2;
+  }
+}

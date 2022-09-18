@@ -1,0 +1,14 @@
+.popup__title-confirmation {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.21;
+  margin: 0 0 20px;
+}
+
+@media all and (max-width: 380px) {
+  .popup__title-confirmation {
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 1.22;
+  }
+}

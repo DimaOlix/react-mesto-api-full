@@ -1,0 +1,9 @@
+.popup__title-photo {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.25;
+  margin: 0;
+  position: absolute;
+  bottom: -24px;
+  left: 0;  
+}

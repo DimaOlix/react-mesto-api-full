@@ -1,0 +1,24 @@
+.header__text-link {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.22;
+  text-align: right;
+  margin-right: 30px;
+  align-self: center;
+}
+
+.header__text-link:hover {
+  cursor: pointer;
+}
+
+@media all and (max-width: 580px) {
+  .header__text-link {
+    margin-right: 0;
+  }
+}
+
+@media all and (max-width: 360px) {
+  .header__text-link {
+    font-size: 15px;
+  }
+}
