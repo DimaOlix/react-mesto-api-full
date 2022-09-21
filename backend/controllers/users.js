@@ -4,7 +4,7 @@ const User = require('../models/user');
 const ErrorNotFound = require('../error-classes/ErrorNotFound');
 const ErrorIncorrectData = require('../error-classes/ErrorIncorrectData');
 const ErrorServer = require('../error-classes/ErrorServer');
-const ErrorAuthentication = require('../error-classes/ErrerAuthentication');
+const ErrorAuthentication = require('../error-classes/ErrorAuthentication');
 const ErrorConflict = require('../error-classes/ErrorConflict');
 
 
@@ -170,6 +170,20 @@ module.exports.login = async (req, res, next) => {
       return;
     }
 
+    next(new ErrorServer('Произошла ошибка на сервере'));
+  }
+};
+
+module.exports.exitThe = async (req, res, next) => {
+  try {
+    if (!req.cookies) {
+      next(new ErrorAuthentication('Вы не авторизованы'));
+      return;
+    }
+    res.clearCookie('token')
+      .send()
+      .end();
+  } catch (err) {
     next(new ErrorServer('Произошла ошибка на сервере'));
   }
 };

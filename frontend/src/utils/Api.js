@@ -7,7 +7,7 @@ class Api {
   _getResponseServer(res) {
     if(res.ok) {
       return res.json();
-    } else {
+  } else {
       return Promise.reject(`Ошибка: ${res.status}`);
     }
   }
@@ -17,7 +17,8 @@ class Api {
       headers: {
         'Content-type': 'application/json', 
         authorization: this.token
-      }  
+      },
+      credentials: "include", 
     })
     .then((res) => {
       return this._getResponseServer(res);
@@ -28,26 +29,25 @@ class Api {
     return fetch(`${this.url}/users/me`, {
       headers: {
         'Content-type': 'application/json', 
-        authorization: this.token
-      }  
+      },  
+      credentials: "include", 
     })
     .then((res) => {
-      return this._getResponseServer(res);
+        return this._getResponseServer(res);
     })
   }
 
   editUserInfo(name, about) {
-
     return fetch( `${this.url}/users/me`, {
       method: 'PATCH',
       headers: {
-        authorization: this.token,
         'Content-Type': 'application/json'
       },
+      credentials: "include", 
       body: JSON.stringify({
         name: name,
         about: about
-      })
+      }),
     })
     .then((res) => {
       return this._getResponseServer(res);
@@ -55,13 +55,12 @@ class Api {
   }
 
   editAvatar(link) {
-
     return fetch( `${this.url}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
-        authorization: this.token,
         'Content-Type': 'application/json'
       },
+      credentials: "include", 
       body: JSON.stringify({
         avatar: link,
       })
@@ -75,9 +74,9 @@ class Api {
     return fetch( `${this.url}/cards`, {
       method: 'POST',
       headers: {
-        authorization: this.token,
         'Content-Type': 'application/json'
       },
+      credentials: "include", 
       body: JSON.stringify({
         name: title,
         link: link
@@ -92,9 +91,9 @@ class Api {
     return fetch( `${this.url}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
-        authorization: this.token,
         'Content-Type': 'application/json'
-        }
+      },
+      credentials: "include",
     })
     .then((res) => {
       return this._getResponseServer(res);
@@ -105,9 +104,9 @@ class Api {
     return fetch( `${this.url}/cards/${cardId}/likes`, {
       method: `${isLiked ? 'DELETE' : 'PUT'}`,
       headers: {
-        authorization: this.token,
         'Content-Type': 'application/json'
-        }
+      },
+      credentials: "include",
     })
     .then((res) => {
       return this._getResponseServer(res);
@@ -115,4 +114,4 @@ class Api {
   }
 }
 
-export default new Api('http://localhost:3001/','0cd5671f-d9e2-44a6-902a-4db007f7a8f2') 
+export default new Api('http://localhost:3001') 

@@ -40,22 +40,28 @@ function App() {
   || registerConfirmation
   || selectedCard;
 
-  React.useEffect(() => {
-    Api.getUserInfo()
-    .then((res) => {
-      setCurrentUser(res);
-    })
-    .catch((err) => console.log(err))
-  }, [])
 
   React.useEffect(() => {
-    Api.getCardsInfo()
-    .then((res) => {
-      setCards(res);
-    })
-    .catch((err) => console.log(err))
+    if (loggedIn) {
+      Api.getUserInfo()
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+  }, [loggedIn])
 
-  }, [])
+  React.useEffect(() => {
+    if (loggedIn) {
+      Api.getCardsInfo()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((err) => console.log(err))
+    }
+  }, [loggedIn])
 
   React.useEffect(() => {
     function closeByEscape(evt) {
@@ -72,10 +78,10 @@ function App() {
   }, [isOpen])
 
   React.useEffect(() => {
-    setLoggedIn(false);
-
-    tokenCheck()
-  }, [])
+    if (localStorage.getItem('loggedIn') === 'true') {
+      tokenCheck();
+    }
+  }, [loggedIn])
 
   React.useEffect(() => {
     if(loggedIn) {
@@ -83,18 +89,12 @@ function App() {
     }
   }, [loggedIn, history])
 
-  function tokenCheck() {
-    const jwt =  localStorage.getItem('jwt');
-
-    if(!jwt) {
-      return
-    }
-
-    ApiAuth.getEmail(jwt)
+  function tokenCheck() {    
+    ApiAuth.getEmail()
     .then((res) => {    
         setUserInfo({
-          '_id': res.data['_id'],
-          'email': res.data['email']
+          '_id': res._id,
+          'email': res.email,
         });
 
         setLoggedIn(true);
@@ -105,10 +105,13 @@ function App() {
   function requestLogin({ values }) {
     ApiAuth.autorise({ values })
     .then((res) => {
-      console.log('dfvdxvxdv');
       setUserInfo({'email': values.login});
-      localStorage.setItem('jwt', res.token);
-      setLoggedIn(true);
+      // setLoggedIn(true);
+      // localStorage.setItem('loggedIn', true)
+      setLoggedIn(() => {
+        localStorage.setItem('loggedIn', true)
+        return true;
+      });
     })
     .catch((err) => console.log(err))
   }
@@ -128,14 +131,25 @@ function App() {
   }
 
   function handleSignOut() {
-    localStorage.removeItem('jwt');
+    ApiAuth.exitThe()
+    .then(() => {
+      // setLoggedIn(false);
+      // localStorage.setItem('loggedIn', false)
+      setLoggedIn(() => {
+        localStorage.setItem('loggedIn', false)
+        return false;
+      })
+    })
+    .catch((err) => console.log(err))
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     Api.changeLikeCardStatus(card._id, isLiked)
     .then((newCard) => {
-      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      setCards((state) => state.map((c) =>
+        c._id === card._id ? newCard : c
+      ));
     })
     .catch((err) => console.log(err))
   }

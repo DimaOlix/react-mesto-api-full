@@ -31,23 +31,40 @@ class ApiAuth {
       headers: {
         "Content-Type": "application/json"
       },
+      credentials: "include",
       body: JSON.stringify({
         "password": values.password,
         "email": values.login
-      })
-    })
+      }),
+    },
+)
     .then(res => this._checkResponse(res));
   }
 
-  getEmail(token) {
+  getEmail() {
     return fetch(`${this.url}/users/me`, {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${token}`
-      }
+      },      
+      credentials: "include",
     })
     .then(res => this._checkResponse(res));
+  }
+
+  exitThe() {
+    return fetch(`${this.url}/signout`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+    .then((res) => {
+      if (!res.ok) {
+        return Promise.reject(`Ошибка ${res.status}: ${res.statusText}`);
+      }
+    });
   }
 }
 

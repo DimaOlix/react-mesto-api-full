@@ -5,12 +5,12 @@ const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const routerUser = require('./routes/users');
 const routerCard = require('./routes/cards');
-const { login, createUser } = require('./controllers/users');
+const { login, createUser, exitThe } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const { errorHandler } = require('./middlewares/errorHandler');
 const { handleCors } = require('./middlewares/handleCors');
 const { validateCreateUser, validateLogin } = require('./middlewares/validations');
-// const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 
 const { PORT = 3001 } = process.env;
@@ -22,17 +22,19 @@ app.use(cookieParser());
 
 app.use(handleCors);
 
-// app.use(requestLogger);
+app.use(requestLogger);
 
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateCreateUser, createUser);
 
 app.use(auth);
 
+app.post('/signout', exitThe);
+
 app.use('/users', routerUser);
 app.use('/cards', routerCard);
 
-// app.use(errorLogger);
+app.use(errorLogger);
 
 app.use(errors());
 app.use(errorHandler);

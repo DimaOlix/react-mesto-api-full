@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const ErrorAuthentication = require('../error-classes/ErrerAuthentication');
+const ErrorAuthentication = require('../error-classes/ErrorAuthentication');
 const ErrorServer = require('../error-classes/ErrorServer');
 
 
