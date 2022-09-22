@@ -106,8 +106,6 @@ function App() {
     ApiAuth.autorise({ values })
     .then((res) => {
       setUserInfo({'email': values.login});
-      // setLoggedIn(true);
-      // localStorage.setItem('loggedIn', true)
       setLoggedIn(() => {
         localStorage.setItem('loggedIn', true)
         return true;
@@ -133,10 +131,8 @@ function App() {
   function handleSignOut() {
     ApiAuth.exitThe()
     .then(() => {
-      // setLoggedIn(false);
-      // localStorage.setItem('loggedIn', false)
       setLoggedIn(() => {
-        localStorage.setItem('loggedIn', false)
+        localStorage.setItem('loggedIn', false);
         return false;
       })
     })
@@ -247,7 +243,6 @@ function App() {
         loggedIn={loggedIn}  
         path='/'
         userInfo={userInfo}
-        setLoggedIn={setLoggedIn}
         handleSignOut={handleSignOut}
         component={Header}  />
         

@@ -2,10 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.svg';
 
-function Header({ userInfo, setLoggedIn, handleSignOut }) {
+function Header({ userInfo, handleSignOut }) {
 
   function onSignOut() {
-    setLoggedIn(false);
     handleSignOut();
   }
 
