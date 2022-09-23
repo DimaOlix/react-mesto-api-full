@@ -79,7 +79,7 @@ function App() {
 
   React.useEffect(() => {
     if (localStorage.getItem('loggedIn') === 'true') {
-      tokenCheck();
+      getLoginData();
     }
   }, [loggedIn])
 
@@ -89,7 +89,7 @@ function App() {
     }
   }, [loggedIn, history])
 
-  function tokenCheck() {    
+  function getLoginData() {    
     ApiAuth.getEmail()
     .then((res) => {    
         setUserInfo({

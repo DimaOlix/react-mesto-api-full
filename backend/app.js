@@ -1,3 +1,12 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+require('dotenv').config();
+
+const {
+  NODE_ENV,
+  PORT,
+  MONGO_URI,
+} = process.env;
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -12,8 +21,6 @@ const { handleCors } = require('./middlewares/handleCors');
 const { validateCreateUser, validateLogin } = require('./middlewares/validations');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-
-const { PORT = 3001 } = process.env;
 const app = express();
 
 app.use(bodyParser.json());
@@ -45,14 +52,17 @@ app.use('*', (req, res, next) => {
 });
 
 async function connect() {
-  await mongoose.connect('mongodb://localhost:27017/mestodb', {
+  await mongoose.connect(NODE_ENV === 'production'
+    ? MONGO_URI
+    : 'mongodb://localhost:27017/mestodb',
+  {
     useNewUrlParser: true,
     useUnifiedTopology: false,
   });
 
-  await app.listen(PORT);
+  await app.listen(NODE_ENV === 'production' ? PORT : 3000);
   // eslint-disable-next-line no-console
-  console.log(`App listening on port ${PORT}`);
+  console.log(`App listening on port ${NODE_ENV === 'production' ? PORT : 3000}`);
 }
 
 connect();

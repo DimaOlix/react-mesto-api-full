@@ -1,3 +1,11 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+require('dotenv').config();
+
+const {
+  NODE_ENV,
+  JWT_SECRET,
+} = process.env;
+
 const jwt = require('jsonwebtoken');
 const ErrorAuthentication = require('../error-classes/ErrorAuthentication');
 const ErrorServer = require('../error-classes/ErrorServer');
@@ -12,7 +20,9 @@ module.exports.auth = async (req, res, next) => {
       return;
     }
 
-    const payload = jwt.verify(token, 'super-secret');
+    const payload = jwt.verify(token, (NODE_ENV === 'production')
+      ? JWT_SECRET
+      : 'secret');
 
     req.user = payload;
   } catch (err) {

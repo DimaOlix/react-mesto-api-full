@@ -1,3 +1,12 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+require('dotenv').config();
+
+const {
+  NODE_ENV,
+  JWT_SECRET,
+  SALT_ROUNDS,
+} = process.env;
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
@@ -60,7 +69,9 @@ module.exports.getUser = async (req, res, next) => {
 
 module.exports.createUser = async (req, res, next) => {
   try {
-    const password = await bcrypt.hash(req.body.password, 10);
+    const password = await bcrypt.hash(req.body.password, NODE_ENV === 'production'
+      ? Number(SALT_ROUNDS)
+      : 10);
     const {
       name,
       email,
@@ -156,11 +167,16 @@ module.exports.login = async (req, res, next) => {
       return;
     }
 
-    const token = jwt.sign({ _id: user._id }, 'super-secret', { expiresIn: '7d' });
+    const token = jwt.sign({ _id: user._id }, (NODE_ENV === 'production')
+      ? JWT_SECRET
+      : 'secret',
+    { expiresIn: '7d' });
 
     res.cookie('token', token, {
       maxAge: 3600000 * 24 * 7,
       httpOnly: true,
+      sameSite: 'lax',
+      secure: true,
     })
       .send({ password: user.password })
       .end();

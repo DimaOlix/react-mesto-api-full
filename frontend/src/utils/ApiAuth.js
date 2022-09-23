@@ -68,4 +68,4 @@ class ApiAuth {
   }
 }
 
-export default new ApiAuth('http://localhost:3001');
+export default new ApiAuth('https://api.dolih.student.nomoredomains.sbs');
