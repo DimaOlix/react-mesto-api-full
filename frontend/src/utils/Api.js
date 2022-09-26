@@ -27,7 +27,7 @@ class Api {
 
   getUserInfo() {
     return fetch(`${this.url}/users/me`, {
-      headers: {
+      headers: { 
         'Content-type': 'application/json', 
       },  
       credentials: "include", 
@@ -114,4 +114,4 @@ class Api {
   }
 }
 
-export default new Api('https://api.dolih.student.nomoredomains.sbs')
+export default new Api('https://api.dolih.student.nomoredomains.sbs');

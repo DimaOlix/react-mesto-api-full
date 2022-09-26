@@ -175,8 +175,7 @@ module.exports.login = async (req, res, next) => {
     res.cookie('token', token, {
       maxAge: 3600000 * 24 * 7,
       httpOnly: true,
-      sameSite: 'lax',
-      secure: true,
+      sameSite: false,
     })
       .send({ password: user.password })
       .end();

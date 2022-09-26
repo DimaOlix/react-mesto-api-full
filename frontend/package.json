@@ -1,7 +1,7 @@
 {
   "name": "mesto-react",
   "version": "0.1.0",
-  "homepage": "https://dimaolix.github.io/mesto-react",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "react": "^18.2.0",
