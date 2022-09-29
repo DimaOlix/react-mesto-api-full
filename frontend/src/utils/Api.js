@@ -114,4 +114,4 @@ class Api {
   }
 }
 
-export default new Api('http://localhost:3001');
+export default new Api('http://api.dolih.student.nomoredomains.sbs');
