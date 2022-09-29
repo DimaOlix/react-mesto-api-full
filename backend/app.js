@@ -20,6 +20,7 @@ const { errorHandler } = require('./middlewares/errorHandler');
 const { handleCors } = require('./middlewares/handleCors');
 const { validateCreateUser, validateLogin } = require('./middlewares/validations');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const ErrorNonExistentAddress = require('./error-classes/ErrorNonExistentAddress');
 
 const app = express();
 
@@ -47,15 +48,15 @@ app.post('/signout', exitThe);
 app.use('/users', routerUser);
 app.use('/cards', routerCard);
 
+app.use('*', (req, res, next) => {
+  next(new ErrorNonExistentAddress('Неверный адрес запроса'));
+});
+
 app.use(errorLogger);
 
 app.use(errors());
 app.use(errorHandler);
 
-app.use('*', (req, res, next) => {
-  res.status(404).send({ message: 'Неверный адрес запроса' });
-  next();
-});
 
 async function connect() {
   await mongoose.connect(NODE_ENV === 'production'
