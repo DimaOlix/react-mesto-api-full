@@ -4,7 +4,7 @@ const { ObjectId } = require('mongoose').Types;
 
 const validateLink = (value, helpers) => {
   // eslint-disable-next-line no-useless-escape
-  if (!/https?:\/\/[w{3}]?[0-9a-zA-Z\-\.\_\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]+\#?$/.test(value)) {
+  if (!/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(value)) {
     return helpers.error('any.invalid');
   }
   return value;

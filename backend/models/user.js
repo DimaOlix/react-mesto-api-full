@@ -31,7 +31,7 @@ const userSchema = mongoose.Schema({
     type: String,
     validate: {
       // eslint-disable-next-line no-useless-escape
-      validator: val => /https?:\/\/[w{3}]?[0-9a-z\-\.\_\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]+\#?$/.test(val),
+      validator: val => /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(val),
     },
   },
 },
