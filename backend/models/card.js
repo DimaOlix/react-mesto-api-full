@@ -12,7 +12,7 @@ const cardSchema = mongoose.Schema({
     required: true,
     validate: {
       // eslint-disable-next-line no-useless-escape
-      validator: val => /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(val),
+      validator: val => /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(val),
       message: 'Передан некорректный адрес',
     },
   },
